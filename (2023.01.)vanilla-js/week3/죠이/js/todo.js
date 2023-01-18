@@ -24,7 +24,7 @@ const students = [
   "정하윤",
   "하예린",
 ];
-const rolls = [
+const roles = [
   "급식(밥)",
   "급식(국)",
   "급식(반찬1)",
@@ -52,79 +52,79 @@ const rolls = [
 ];
 
 //누적
-// const roll = [
+// const role = [
 //   {
 //     student: "강승기",
-//     roll: ["급식(밥)", "책장정리"],
+//     role: ["급식(밥)", "책장정리"],
 //   },
 // ];
 
-const addRollForm = document.getElementById("addRoll-form");
-const addRollName = document.getElementById("addRollName");
-const addRollRoll = document.getElementById("addRollRoll");
-const addRollBtn = document.querySelector("#addRoll-form button");
+const addRoleForm = document.getElementById("addRole-form");
+const addRoleName = document.getElementById("addRoleName");
+const addRoleRole = document.getElementById("addRoleRole");
+const addRoleBtn = document.querySelector("#addRole-form button");
 
-const rollList = document.getElementById("rollList");
+const roleList = document.getElementById("roleList");
 
-const ROLL_KEY = "studentRoll";
+const ROLE_KEY = "studentRole";
 
-let newRoll = [];
+let newRole = [];
 
-function pickRoll() {
+function pickRole() {
   for (let i = 0; i < students.length; i++) {
-    newRoll.push({
+    newRole.push({
       student: students[i],
-      roll: rolls[i],
+      role: roles[i],
     });
   }
-  saveRoll(newRoll);
+  saveRole(newRole);
 }
 
-pickRoll();
+pickRole();
 
-const savedRoll = localStorage.getItem(ROLL_KEY);
-if (savedRoll !== null) {
-  const parsedRoll = JSON.parse(savedRoll);
-  newRoll = parsedRoll;
-  parsedRoll.forEach(paintRoll);
+const savedRole = localStorage.getItem(ROLE_KEY);
+if (savedRole !== null) {
+  const parsedRole = JSON.parse(savedRole);
+  newRole = parsedRole;
+  parsedRole.forEach(paintRole);
 }
-function saveRoll(newRoll) {
-  localStorage.setItem(ROLL_KEY, JSON.stringify(newRoll));
+function saveRole(newRole) {
+  localStorage.setItem(ROLE_KEY, JSON.stringify(newRole));
 }
 
-function deleteRoll(event) {
+function deleteRole(event) {
   const li = event.target;
   li.remove();
-  newRoll = newRoll.filter((roll) => roll.student !== roll.student);
-  saveRoll();
+  newRole = newRole.filter((role) => role.student !== role.student);
+  saveRole();
 }
 
-function paintRoll(newRoll) {
+function paintRole(newRole) {
   const li = document.createElement("li");
   const span = document.createElement("span");
-  span.innerText = `${newRoll.student} : ${newRoll.roll}`;
+  span.innerText = `${newRole.student} : ${newRole.role}`;
   li.appendChild(span);
-  rollList.appendChild(li);
-  li.addEventListener("click", deleteRoll);
+  roleList.appendChild(li);
+  li.addEventListener("click", deleteRole);
 }
 
 //입력한 내용을 보내는 함수
-function handleRollSubmit(event) {
+function handleRoleSubmit(event) {
   event.preventDefault();
-  const newStudent = addRollName.value;
-  const newRollName = addRollRoll.value;
+  const newStudent = addRoleName.value;
+  const newRoleName = addRoleRole.value;
 
-  addRollName.value = "";
-  addRollRoll.value = "";
+  addRoleName.value = "";
+  addRoleRole.value = "";
 
-  const newRollObj = {
+  const newRoleObj = {
     student: newStudent,
-    roll: newRollName,
+    role: newRoleName,
   };
-  paintRoll(newRollObj);
-  newRoll.push(newRollObj);
-  saveRoll();
+  paintRole(newRoleObj);
+  newRole.push(newRoleObj);
+  saveRole();
 }
 
 //입력 이벤트 받기
-addRollForm.addEventListener("submit", handleRollSubmit);
+addRoleForm.addEventListener("submit", handleRoleSubmit);
